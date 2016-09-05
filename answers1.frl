@@ -1,0 +1,79 @@
+/*
+Alex Kersey
+Daniel Moon
+Garrett Scholtes
+
+AI Assignment #1
+
+This assignment aims to define predicates for family relationships
+and perform some basic queries about the family hierarchy.
+*/
+
+((female Mary  ))
+((female Sandra ))
+((female Juliet ))
+((female Lisa ))
+
+((male Peter ))
+((male Paul ))
+((male Dick ))
+((male Bob ))
+((male Harry ))
+
+((parent Bob  Lisa ))
+((parent Bob  Paul ))
+((parent Bob  Mary  ))
+((parent Juliet  Lisa ))
+((parent Juliet  Paul ))
+((parent Juliet  Mary ))
+((parent Peter  Harry ))
+((parent Lisa  Harry ))
+((parent Mary   Dick ))
+((parent Mary   Sandra ))
+
+%%% Define new predicates for the relations %%%
+
+% Father %
+((father F X)
+	(male F)
+	(parent F X))
+
+% Sister %
+((sister S X)
+	(female S)
+	(parent P S)
+	(parent P X)
+	(negg eq S X))
+
+% Grandmother %
+((grandmother G X)
+	(female G)
+	(parent G P)
+	(parent P X))
+
+% Cousin %
+((cousin X Y)
+	(parent PX X)
+	(parent PY Y)
+	(parent G PX)
+	(parent G PY)
+	(negg eq X Y)
+	(negg eq PX PY))
+
+%%% Write the queries corresponding to the following English questions %%%
+
+?((pp "1. Is it true that Bob is Lisa's father?"))
+?((father Bob Lisa)(pp))
+
+?((pp "2. Is it true that Juliet is Paul's mother?"))
+?((parent Juliet Paul)(female Juliet)(pp))
+
+?((pp "3. Who is Paul's sister?"))
+?((sister X Paul)(pp X)(fail))
+?((pp))
+
+?((pp "4. Who is a grandmother?"))
+?((grandmother X Y)(pp X))
+
+?((pp "5. Who is Mary's cousin?"))
+?((cousin Mary X)(pp X))
