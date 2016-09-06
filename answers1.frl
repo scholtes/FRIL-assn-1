@@ -60,20 +60,28 @@ and perform some basic queries about the family hierarchy.
 	(negg eq X Y)
 	(negg eq PX PY))
 
+% Mother %
+% Defining this for the sake of printing %
+((mother X Y)
+	(female X)(parent X Y))
+
 %%% Write the queries corresponding to the following English questions %%%
 
 ?((pp "1. Is it true that Bob is Lisa's father?"))
-?((father Bob Lisa)(pp))
+?((if (father Bob Lisa) ((pp "Yes")) ((pp "No"))))
+?((pp))
 
 ?((pp "2. Is it true that Juliet is Paul's mother?"))
-?((parent Juliet Paul)(female Juliet)(pp))
+?((if (mother Juliet Paul) ((pp "Yes")) ((pp "No"))))
+?((pp))
 
 ?((pp "3. Who is Paul's sister?"))
 ?((sister X Paul)(pp X)(fail))
 ?((pp))
 
 ?((pp "4. Who is a grandmother?"))
-?((grandmother X Y)(pp X))
+?((grandmother X Y)(pp X)(fail))
+?((pp))
 
 ?((pp "5. Who is Mary's cousin?"))
-?((cousin Mary X)(pp X))
+?((if (cousin Mary X)((pp X))((pp "(this person has no cousins)"))))
